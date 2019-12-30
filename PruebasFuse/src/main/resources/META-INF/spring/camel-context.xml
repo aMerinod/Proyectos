@@ -13,13 +13,23 @@
     distributed under the License is distributed on an "AS IS" BASIS,
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
-    limitations under the License.
+    limitations under the License.    
 -->
 <!-- Configures the Camel Context-->
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
-    <camelContext id="_camelContext1" xmlns="http://camel.apache.org/schema/spring">
+    <bean class="es.merino.pruebas.telegram.RecibirMensaje" id="recibirMensajeTelegram"/>
+    <bean class="es.merino.pruebas.linkedin.RecogerJobsLinkedin" id="recogerJobsLinkedin"/>
+    <camelContext id="camelContextTelegram" xmlns="http://camel.apache.org/schema/spring">
+        <!--         <route id="recibrTelegram"> -->
+        <!--             <from id="_from1" uri="telegram:bots/1008561825:AAFwBGSmfAVCw-fUVFDbSzNj5_bp4Txslt0?authorizationToken=1008561825:AAFwBGSmfAVCw-fUVFDbSzNj5_bp4Txslt0"/> -->
+        <!--             <process id="ProcesoRecibirMensajeTelegram" ref="recibirMensajeTelegram"/> -->
+        <!--             <to id="_to1" uri="telegram:bots/1008561825:AAFwBGSmfAVCw-fUVFDbSzNj5_bp4Txslt0??authorizationToken=1008561825:AAFwBGSmfAVCw-fUVFDbSzNj5_bp4Txslt0;chatId=PFusebot;"/> -->
+        <!--         </route> -->
         <route id="_route1">
+            <from id="_from2" uri="linkedin:search/searchJobs?country_code=ES&amp;keywords=java&amp;clientId=77gyyb7vvqfr2o&amp;clientSecret=JAFyazVAhtZ9eg7Z&amp;userName=aitormerino@hotmail.com&amp;userPassword=a78912800F&amp;redirectUri=https://localhost"/>
+            <process id="ProcesoRecogerJobLinkedin" ref="recogerJobsLinkedin"/>
+            <to id="_to1" uri="telegram:bots/1008561825:AAFwBGSmfAVCw-fUVFDbSzNj5_bp4Txslt0??authorizationToken=1008561825:AAFwBGSmfAVCw-fUVFDbSzNj5_bp4Txslt0;chatId=PFusebot;"/>
         </route>
     </camelContext>
 </beans>
